@@ -2,7 +2,7 @@ var save=document.querySelector('.save');
 
 save.addEventListener('click',Run);
 
-function Run(e)
+async function Run(e)
 {
     e.preventDefault();
     var expense=document.getElementById('expenseamount').value;
@@ -15,30 +15,24 @@ function Run(e)
         Category:category
         } 
 
-        async function post()
-        {
+        
           try{
-            await axios.post("https://crudcrud.com/api/c09cfc35dc16454faf08e35b7a8bbbb7/expenses",myobj);
-            showOutput(myobj);
+            let res=await axios.post("https://crudcrud.com/api/d7debae6061647bf912d12d8a014974e/expenses",myobj);
+             console.log(res.data);
+              showOutput(res.data);
           }
           catch(err){
             document.body.innerHTML=document.body.innerHTML+"<h4>something went wrong with post</h4>";
             console.error(err);
             }
-           
-        }
-        post();
-  
-  
 }
 
 
- window.addEventListener('DOMContentLoaded', (event) => {
+ window.addEventListener('DOMContentLoaded', async (event) => {
    
-    async function get()
-    {
+    
       try{
-        let res=await axios.get("https://crudcrud.com/api/c09cfc35dc16454faf08e35b7a8bbbb7/expenses");
+        let res=await axios.get("https://crudcrud.com/api/d7debae6061647bf912d12d8a014974e/expenses");
       for(var i=0;i<res.data.length;i++)
       {
         showOutput(res.data[i]);
@@ -48,8 +42,7 @@ function Run(e)
         document.body.innerHTML=document.body.innerHTML+"<h4>something went wrong with dom content loaded</h4>";
         console.error(err);
         }
-     }
-      get();
+    
   
 
 }); 
@@ -87,7 +80,7 @@ var del=document.querySelector('.data');
 del.addEventListener('click',remove);
 del.addEventListener('click',edit);
 
- function remove(e)
+ async function remove(e)
 {
     
       if(e.target.classList.contains('delete'))
@@ -95,18 +88,18 @@ del.addEventListener('click',edit);
          var li=e.target.parentElement;
          del.removeChild(li);
          
-         async function d()
-         {
+         
+      
           try{
-             var res=await axios.delete(`https://crudcrud.com/api/c09cfc35dc16454faf08e35b7a8bbbb7/expenses/${li.id}`)
-            console.log(res);
+             var res=await axios.delete(`https://crudcrud.com/api/d7debae6061647bf912d12d8a014974e/expenses/${li.id}`)
+             console.log(res);
           }
              catch(err){
               document.body.innerHTML=document.body.innerHTML+"<h4>something went wrong delete functionality</h4>";
               console.error(err);
               }
-         }
-         d();
+         
+         
        
       }
         
@@ -114,7 +107,7 @@ del.addEventListener('click',edit);
 
 
 
- function edit(e)
+ async function edit(e)
 {
     
       if(e.target.classList.contains('edit'))
@@ -122,20 +115,18 @@ del.addEventListener('click',edit);
         var li=e.target.parentElement;
         del.removeChild(li);
        
-        async function ed()
-        {
+        
           try{
-             let ed=await axios.get(`https://crudcrud.com/api/c09cfc35dc16454faf08e35b7a8bbbb7/expenses/${li.id}`)
-             await retriveUser(ed.data);
-             let res= await axios.delete(`https://crudcrud.com/api/c09cfc35dc16454faf08e35b7a8bbbb7/expenses/${li.id}`)
-             console.log(res)
+            let ed=await axios.get(`https://crudcrud.com/api/d7debae6061647bf912d12d8a014974e/expenses/${li.id}`)
+             retriveUser(ed.data);
+            let res= await axios.delete(`https://crudcrud.com/api/d7debae6061647bf912d12d8a014974e/expenses/${li.id}`)
+            console.log(res)
           }
          catch(err){
             document.body.innerHTML=document.body.innerHTML+"<h4>something went wrong with edit functionality</h4>";
             console.error(err);
             }
-        }
-        ed();
+       
         
        
       }
